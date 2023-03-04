@@ -133,24 +133,29 @@ const Archive = () => {
   };
 
   const deleteSingleData = async (id) => {
-    const docRef = doc(db, "regArchieve", id);
-    const snapshot = await getDoc(docRef);
-    await addDoc(userCollectionSummaryreport, {
-      status: snapshot.data().status,
-      name: snapshot.data().name,
-      transaction: snapshot.data().transaction,
-      email: snapshot.data().email,
-      studentNumber: snapshot.data().studentNumber,
-      address: snapshot.data().address,
-      contact: snapshot.data().contact,
-      userType: snapshot.data().userType,
-      yearSection: snapshot.data().yearSection,
-      ticket: snapshot.data().ticket,
-      timestamp: snapshot.data().timestamp,
-      date: snapshot.data().date,
-    });
-    const userDoc = doc(db, "regArchieve", id);
-    await deleteDoc(userDoc);
+    if (window.confirm("Are you sure want to restore?")) {
+      const docRef = doc(db, "regArchieve", id);
+      const snapshot = await getDoc(docRef);
+      await addDoc(userCollectionSummaryreport, {
+        status: snapshot.data().status,
+        name: snapshot.data().name,
+        transaction: snapshot.data().transaction,
+        email: snapshot.data().email,
+        studentNumber: snapshot.data().studentNumber,
+        address: snapshot.data().address,
+        contact: snapshot.data().contact,
+        userType: snapshot.data().userType,
+        yearSection: snapshot.data().yearSection,
+        ticket: snapshot.data().ticket,
+        timestamp: snapshot.data().timestamp,
+        date: snapshot.data().date,
+        day: snapshot.data().day,
+        month: snapshot.data().month,
+        year: snapshot.data().year,
+      });
+      const userDoc = doc(db, "regArchieve", id);
+      await deleteDoc(userDoc);
+    }
   };
 
   const deletePermanentSingleData = async (id) => {
@@ -177,14 +182,21 @@ const Archive = () => {
   };
 
   const navigate = useNavigate();
+
   useEffect(() => {
-    if (
-      localStorage.getItem("Password1") !== "admin" &&
-      localStorage.getItem("Username1") !== "adminreg"
-    ) {
-      navigate("/admin");
-    }
-  });
+    const checkTime = async () => {
+      if (
+        localStorage.getItem("Password1") !== "admin" &&
+        localStorage.getItem("Username1") !== "adminreg"
+      ) {
+        navigate("/admin");
+      }
+    };
+
+    const intervalId = setInterval(checkTime, 3000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   useEffect(() => {
     tableQueryArchive();
@@ -199,53 +211,61 @@ const Archive = () => {
     return unsub;
   };
   const restoreAll = async () => {
-    let docRef = doc(db, "regArchieve", "ddwd");
-    let snapshot = await getDoc(docRef);
+    if (window.confirm("Are you sure you want to restore all?")) {
+      let docRef = doc(db, "regArchieve", "ddwd");
+      let snapshot = await getDoc(docRef);
 
-    if (searchData.length === 0) {
-      userdata.map(
-        async (queue) => (
-          (docRef = doc(db, "regArchieve", queue.id)),
-          (snapshot = await getDoc(docRef)),
-          await addDoc(userCollectionSummaryreport, {
-            status: snapshot.data().status,
-            name: snapshot.data().name,
-            transaction: snapshot.data().transaction,
-            email: snapshot.data().email,
-            studentNumber: snapshot.data().studentNumber,
-            address: snapshot.data().address,
-            contact: snapshot.data().contact,
-            userType: snapshot.data().userType,
-            yearSection: snapshot.data().yearSection,
-            ticket: snapshot.data().ticket,
-            timestamp: snapshot.data().timestamp,
-            date: snapshot.data().date,
-          }),
-          await deleteDoc(doc(db, "regArchieve", queue.id))
-        )
-      );
-    } else {
-      searchData.map(
-        async (queue) => (
-          (docRef = doc(db, "regArchieve", queue.id)),
-          (snapshot = await getDoc(docRef)),
-          await addDoc(userCollectionSummaryreport, {
-            status: snapshot.data().status,
-            name: snapshot.data().name,
-            transaction: snapshot.data().transaction,
-            email: snapshot.data().email,
-            studentNumber: snapshot.data().studentNumber,
-            address: snapshot.data().address,
-            contact: snapshot.data().contact,
-            userType: snapshot.data().userType,
-            yearSection: snapshot.data().yearSection,
-            ticket: snapshot.data().ticket,
-            timestamp: snapshot.data().timestamp,
-            date: snapshot.data().date,
-          }),
-          await deleteDoc(doc(db, "regArchieve", queue.id))
-        )
-      );
+      if (searchData.length === 0) {
+        userdata.map(
+          async (queue) => (
+            (docRef = doc(db, "regArchieve", queue.id)),
+            (snapshot = await getDoc(docRef)),
+            await addDoc(userCollectionSummaryreport, {
+              status: snapshot.data().status,
+              name: snapshot.data().name,
+              transaction: snapshot.data().transaction,
+              email: snapshot.data().email,
+              studentNumber: snapshot.data().studentNumber,
+              address: snapshot.data().address,
+              contact: snapshot.data().contact,
+              userType: snapshot.data().userType,
+              yearSection: snapshot.data().yearSection,
+              ticket: snapshot.data().ticket,
+              timestamp: snapshot.data().timestamp,
+              date: snapshot.data().date,
+              day: snapshot.data().day,
+              month: snapshot.data().month,
+              year: snapshot.data().year,
+            }),
+            await deleteDoc(doc(db, "regArchieve", queue.id))
+          )
+        );
+      } else {
+        searchData.map(
+          async (queue) => (
+            (docRef = doc(db, "regArchieve", queue.id)),
+            (snapshot = await getDoc(docRef)),
+            await addDoc(userCollectionSummaryreport, {
+              status: snapshot.data().status,
+              name: snapshot.data().name,
+              transaction: snapshot.data().transaction,
+              email: snapshot.data().email,
+              studentNumber: snapshot.data().studentNumber,
+              address: snapshot.data().address,
+              contact: snapshot.data().contact,
+              userType: snapshot.data().userType,
+              yearSection: snapshot.data().yearSection,
+              ticket: snapshot.data().ticket,
+              timestamp: snapshot.data().timestamp,
+              date: snapshot.data().date,
+              day: snapshot.data().day,
+              month: snapshot.data().month,
+              year: snapshot.data().year,
+            }),
+            await deleteDoc(doc(db, "regArchieve", queue.id))
+          )
+        );
+      }
     }
   };
 
@@ -265,7 +285,7 @@ const Archive = () => {
                 sx={{ flexGrow: 1 }}
                 color="white"
               >
-                Archives
+                Archive
               </Typography>
             </Toolbar>
           </AppBar>
@@ -333,7 +353,7 @@ const Archive = () => {
               Delete All
             </Button>
             <Button onClick={viewAll} variant="outlined" color="pupMaroon">
-              Refresh
+              View All
             </Button>
           </Stack>
         </Box>
@@ -347,7 +367,7 @@ const Archive = () => {
           >
             <Table sx={{ tableLayout: "auto", height: "maxContent" }}>
               <ThemeProvider theme={styleTableHead}>
-                <TableHead sx={{ position: "sticky", top: 0, zIndex: 1 }}>
+                <TableHead sx={{ position: "sticky", top: 0, zIndex: 10 }}>
                   <TableRow>
                     <TableCell
                       sx={{
@@ -359,13 +379,15 @@ const Archive = () => {
                     >
                       Action
                     </TableCell>
+
                     <TableCell>Status</TableCell>
+                    <TableCell>Name</TableCell>
                     <TableCell>Date</TableCell>
                     <TableCell>Ticket</TableCell>
                     <TableCell>Transaction</TableCell>
-                    <TableCell>Name</TableCell>
                     <TableCell>Student Number</TableCell>
                     <TableCell>Email</TableCell>
+                    <TableCell>Counter</TableCell>
                     <TableCell>Type of User</TableCell>
                     <TableCell>Year&Section</TableCell>
                     <TableCell>Contact Number</TableCell>
@@ -415,6 +437,7 @@ const Archive = () => {
                             </Stack>
                           </TableCell>
                           <TableCell>{queue.status}</TableCell>
+                          <TableCell>{queue.name}</TableCell>
                           <TableCell>{queue.date}</TableCell>
                           <TableCell align="right" sx={{ fontWeight: "bold" }}>
                             {queue.ticket}
@@ -422,7 +445,6 @@ const Archive = () => {
                           <Tooltip title={queue.transaction} arrow>
                             <TableCell>{queue.transaction}</TableCell>
                           </Tooltip>
-                          <TableCell>{queue.name}</TableCell>
                           <TableCell>{queue.studentNumber}</TableCell>
                           <TableCell>{queue.email}</TableCell>
                           <TableCell>{queue.userType}</TableCell>
@@ -478,6 +500,7 @@ const Archive = () => {
                             </Stack>
                           </TableCell>
                           <TableCell>{queue.status}</TableCell>
+                          <TableCell>{queue.name}</TableCell>
                           <TableCell>{queue.date}</TableCell>
                           <TableCell align="right" sx={{ fontWeight: "bold" }}>
                             {queue.ticket}
@@ -485,7 +508,6 @@ const Archive = () => {
                           <Tooltip title={queue.transaction} arrow>
                             <TableCell>{queue.transaction}</TableCell>
                           </Tooltip>
-                          <TableCell>{queue.name}</TableCell>
                           <TableCell>{queue.studentNumber}</TableCell>
                           <TableCell>{queue.email}</TableCell>
                           <TableCell>{queue.userType}</TableCell>

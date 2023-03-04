@@ -26,7 +26,7 @@ import {
 } from "@mui/material";
 import { SearchOutlined, Delete } from "@mui/icons-material";
 import img from "../../Img/seal.png";
-import Sidebar from "../../Components/Registrar/Sidebar";
+import Sidebar from "../../Components/Acadhead/Sidebar";
 import Theme from "../../CustomTheme";
 import { db } from "../../firebase-config";
 import {
@@ -43,7 +43,9 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { async } from "@firebase/util";
 import { useReactToPrint } from "react-to-print";
+import { transactionsAcad } from "../../Components/Selectfunctions";
 
 // table header syle
 const styleTableHead = createTheme({
@@ -145,8 +147,8 @@ const Report = () => {
   }, []);
 
   const tableQueryHistory = async () => {
-    const regQueueCollection = collection(db, "regSummaryreport");
-    const q = query(regQueueCollection, orderBy("timestamp", "desc"));
+    const acadQueueCollection = collection(db, "regSummaryreport");
+    const q = query(acadQueueCollection, orderBy("timestamp", "desc"));
     const unsub = onSnapshot(q, (snapshot) =>
       setQluserData(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     );
@@ -162,8 +164,8 @@ const Report = () => {
     return unsub;
   };
   const tableQuerySearch = async () => {
-    let regQueueCollection = collection(db, "regSummaryreport");
-    let q = query(regQueueCollection, where(sort, "==", search));
+    let acadQueueCollection = collection(db, "regSummaryreport");
+    let q = query(acadQueueCollection, where(sort, "==", search));
     let unsub = onSnapshot(q, (snapshot) =>
       setSearchData(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     );
@@ -304,9 +306,8 @@ const Report = () => {
     } else if (filter === year) {
       document = "year";
     }
-    console.log(document + " " + filter);
-    let regQueueCollection = collection(db, "regSummaryreport");
-    let q = query(regQueueCollection, where(document, "==", filter));
+    let acadQueueCollection = collection(db, "regSummaryreport");
+    let q = query(acadQueueCollection, where(document, "==", filter));
     let unsub = onSnapshot(q, (snapshot) =>
       setSearchData(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     );
@@ -331,8 +332,8 @@ const Report = () => {
         setSearch(current.getFullYear());
       }
     }
-    let regQueueCollection = collection(db, "regSummaryreport");
-    let q = query(regQueueCollection, where(sort, "==", filter));
+    let acadQueueCollection = collection(db, "regSummaryreport");
+    let q = query(acadQueueCollection, where(sort, "==", filter));
     let unsub = onSnapshot(q, (snapshot) =>
       setSearchData(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     );
@@ -661,6 +662,7 @@ const Report = () => {
                     <TableCell>Transaction</TableCell>
                     <TableCell>Student Number</TableCell>
                     <TableCell>Email</TableCell>
+                    <TableCell>Counter</TableCell>
                     <TableCell>Type of User</TableCell>
                     <TableCell>Year&Section</TableCell>
                     <TableCell>Contact Number</TableCell>
@@ -709,7 +711,7 @@ const Report = () => {
                             >
                               {queue.transaction}
                             </TableCell>
-                          </Tooltip>
+                          </Tooltip>{" "}
                           <TableCell>{queue.studentNumber}</TableCell>
                           <TableCell>{queue.email}</TableCell>
                           <TableCell>{queue.userType}</TableCell>
@@ -729,20 +731,12 @@ const Report = () => {
                     <TableBody>
                       {searchData.map((queue, index) => (
                         <TableRow key={index}>
-                          <TableCell
-                            sx={{
-                              position: "sticky",
-                              left: 0,
-                              zIndex: "1",
-                              backgroundColor: "#ffffff",
-                            }}
-                          >
+                          <TableCell>
                             <IconButton>
                               <Delete
                                 onClick={() => {
                                   deleteSingleData(queue.id);
                                 }}
-                                color="red"
                               />
                             </IconButton>
                           </TableCell>

@@ -16,30 +16,66 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import moment from "moment-timezone";
 import Theme from "../../CustomTheme";
+import { db } from "../../firebase-config";
+import {
+  doc,
+  deleteDoc,
+  collection,
+  onSnapshot,
+  getCountFromServer,
+} from "firebase/firestore";
 
 const Cards = () => {
-  const [isDisabled, setIsDisabled] = useState(true);
-  const timezone = "Asia/Manila";
+  const [isDisabled, setIsDisabled] = useState(false);
+  //const timezone = "Asia/Manila";
+  const [userData, setUserData] = useState([]);
+  let x = 0;
+  let stop = 0;
 
   // to disable time in specific time only
   useEffect(() => {
-    const checkTime = () => {
-      let currentTime = moment().tz(timezone);
-      let startTime = moment.tz("08:00", "HH:mm", timezone);
-      let endTime = moment.tz("17:00", "HH:mm", timezone);
+    const checkTime = async () => {
+      let currentTime = moment();
+      let startTime = moment("06:00", "HH:mm");
+      let endTime = moment("16:00", "HH:mm");
+      tableQueryTicket();
 
       if (currentTime.isBetween(startTime, endTime)) {
         setIsDisabled(false);
         sessionStorage.setItem("Auth", true);
       } else {
         setIsDisabled(true);
-        sessionStorage.setItem("Auth", false);
+        sessionStorage.setItem("Auth", true);
+        let docRef = doc(db, "acadTicket", "l");
+        userData.map(
+          async (queue) => (
+            (docRef = doc(db, "acadTicket", queue.id)),
+            await deleteDoc(doc(db, "acadTicket", queue.id))
+          )
+        );
       }
+
+      const coll1 = collection(db, "acadTicket");
+      const snapshot1 = await getCountFromServer(coll1);
+      stop = snapshot1.data().count;
     };
-    const intervalId = setInterval(checkTime, 1000);
+
+    const intervalId = setInterval(checkTime, 2000);
 
     return () => clearInterval(intervalId);
   }, []);
+
+  useEffect(() => {
+    tableQueryTicket();
+  }, []);
+
+  const tableQueryTicket = async () => {
+    const acadQueueCollection = collection(db, "acadTicket");
+    const unsub = onSnapshot(acadQueueCollection, (snapshot) =>
+      setUserData(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    );
+    return unsub;
+  };
 
   // navigations
   const navigate = useNavigate();

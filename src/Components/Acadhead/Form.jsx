@@ -44,9 +44,9 @@ import {
   getDocs,
   getCountFromServer,
 } from "firebase/firestore";
+import { sm, transactionsAcad, yrSN, yrSections } from "../Selectfunctions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { sm, transactionsAcad, yrSN, yrSections } from "../Selectfunctions";
 
 const Form = () => {
   const [address, setAddress] = useState("");
@@ -66,36 +66,47 @@ const Form = () => {
   const userCollection2 = collection(db, "acadPriority");
   const userCollection3 = collection(db, "acadTicket");
   const [error, setError] = useState(false);
+  const [formDisable, setFormDisable] = useState(false);
   const [emailError, setEmailError] = useState("");
   let fullStudentNumber = snYear + "-" + studentNumber + "-" + branch;
-  let [countData, setCount] = useState();
-  let sampleID = 0;
-
-  const timezone = "Asia/Manila";
+  const [label, setLabel] = useState("");
+  const [officeHours, setOfficeHours] = useState();
+  let x = 0;
 
   // to disable time in specific time only
   useEffect(() => {
-    const checkTime = () => {
-      let currentTime = moment().tz(timezone);
-      let startTime = moment.tz("01:00", "HH:mm a", timezone);
-      let endTime = moment.tz("24:00", "HH:mm a", timezone);
-
+    const checkTime = async () => {
+      let currentTime = moment();
+      let startTime = moment("05:57", "HH:mm");
+      let endTime = moment("16:00", "HH:mm");
       if (currentTime.isBetween(startTime, endTime)) {
-        sessionStorage.setItem("Auth", "true");
+        setFormDisable(false);
+        setOfficeHours(true);
       } else {
-        sessionStorage.setItem("Auth", "false");
+        setOfficeHours(false);
+        setFormDisable(true);
+      }
+      const coll = collection(db, "acadTicket");
+      const snapshot = await getCountFromServer(coll);
+      x = snapshot.data().count;
+      if (x >= 60) {
+        toast.error("Daily transaction is full please comeback tomorrow", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        navigate("/");
       }
     };
     const intervalId = setInterval(checkTime, 1000);
 
     return () => clearInterval(intervalId);
   }, []);
-
-  useEffect(() => {
-    if (sessionStorage.getItem("Auth") === "false") {
-      navigate("/");
-    }
-  });
 
   const landing = () => {
     navigate("/");
@@ -178,7 +189,8 @@ const Form = () => {
             creatingUser();
           } else {
             setError(true);
-            toast.warn("Please fillout Empty Fields!", {
+
+            toast.error("Please check your name", {
               position: "top-right",
               autoClose: 3000,
               hideProgressBar: false,
@@ -197,7 +209,7 @@ const Form = () => {
           }
         } else {
           setError(true);
-          toast.warn("Please fillout Empty Fields!", {
+          toast.error("Please fill the required field/s", {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,
@@ -215,7 +227,7 @@ const Form = () => {
         } else {
           setError(true);
           if (contact.length === 0) {
-            toast.warn("Please fill the required field/s", {
+            toast.error("Please fill the required field/s", {
               position: "top-right",
               autoClose: 3000,
               hideProgressBar: false,
@@ -226,7 +238,7 @@ const Form = () => {
               theme: "dark",
             });
           } else if (contact.length < 11) {
-            toast.warn("Please check your contact number", {
+            toast.error("Please check your contact number", {
               position: "top-right",
               autoClose: 3000,
               hideProgressBar: false,
@@ -240,7 +252,7 @@ const Form = () => {
         }
       }
     } else {
-      toast.warn("Please fill the required field/s", {
+      toast.error("Fill required field/s", {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -419,7 +431,7 @@ const Form = () => {
         theme: "dark",
       });
     } else if (x === 0 && y > 0) {
-      toast.warn("Contact is existing on Que Line", {
+      toast.warn("Contact is existing on QueLine", {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -430,7 +442,7 @@ const Form = () => {
         theme: "dark",
       });
     } else if (x > 0 && y > 0) {
-      toast.warn("ontact and Stundent Number is existing on Que Line", {
+      toast.warn("Contact and Stundent Number is existing on Que Line", {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -467,7 +479,9 @@ const Form = () => {
     }
     if (selectedForm === "Regular") {
       if (
-        window.confirm("Are you sure you wish to add this transaction regular?")
+        window.confirm(
+          "Are you sure you wish to add this transaction to regular?"
+        )
       ) {
         const coll = query(
           collection(db, "acadTicket"),
@@ -495,7 +509,7 @@ const Form = () => {
     } else {
       if (
         window.confirm(
-          "Are you sure you wish to add this transaction priority?"
+          "Are you sure you wish to add this transaction to priority?"
         )
       ) {
         const coll = query(
@@ -559,6 +573,13 @@ const Form = () => {
                     Academic Head QMS Form
                   </Typography>
                 </Box>
+                {officeHours === false && (
+                  <Stack spacing={0} direction="column" p={3}>
+                    <label className="red-text">
+                      The office is closed, Office Hours 8:00 AM - 5:00PM
+                    </label>
+                  </Stack>
+                )}
                 <Stack spacing={2} direction="column" p={3}>
                   <TextField
                     type="text"
@@ -566,6 +587,7 @@ const Form = () => {
                     required
                     label="Name"
                     autoFocus
+                    disabled={formDisable}
                     placeholder="Ex. Juan Dela Cruz"
                     value={name}
                     onChange={letterOnly} //set name
@@ -598,6 +620,7 @@ const Form = () => {
                     </InputLabel>
                     <Select
                       required
+                      disabled={formDisable}
                       open={showSelect}
                       onOpen={() => setShowSelect(true)}
                       onClose={() => setShowSelect(false)}
@@ -684,11 +707,13 @@ const Form = () => {
                       onChange={(event) => setSelectedForm(event.target.value)}
                     >
                       <FormControlLabel
+                        disabled={formDisable}
                         value="Regular"
                         control={<Radio color="pupMaroon" />}
                         label="Regular"
                       />
                       <FormControlLabel
+                        disabled={formDisable}
                         value="Priority"
                         control={<Radio color="pupMaroon" />}
                         label="PWD/Pregnant/Senior"
@@ -713,6 +738,7 @@ const Form = () => {
                       aria-labelledby="demo-row-radio-buttons-group-label"
                       name="row-radio-buttons-group"
                       color="pupMaroon"
+                      disabled={formDisable}
                       value={selectedUser}
                       onChange={(event) => {
                         setSelectedUser(event.target.value);
@@ -720,6 +746,7 @@ const Form = () => {
                       }}
                     >
                       <FormControlLabel
+                        disabled={formDisable}
                         value="Student"
                         control={<Radio color="pupMaroon" />}
                         label="Student"
@@ -727,6 +754,7 @@ const Form = () => {
                       />
 
                       <FormControlLabel
+                        disabled={formDisable}
                         value="Guest/Parent/Alumni"
                         control={<Radio color="pupMaroon" />}
                         label="Guest/Parent/Alumni"
@@ -984,6 +1012,7 @@ const Form = () => {
                         onClick={handleErr}
                         endIcon={<ChevronRight />}
                         component={motion.div}
+                        disabled={formDisable}
                         whileHover={{
                           scale: 1.2,
                           transition: { duration: 0.3 },
@@ -992,7 +1021,6 @@ const Form = () => {
                       >
                         Submit
                       </Button>
-
                       <ToastContainer
                         position="top-right"
                         autoClose={3000}

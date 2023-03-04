@@ -311,7 +311,6 @@ const Report = () => {
     } else if (filter === year) {
       document = "year";
     }
-    console.log(document + " " + filter);
     let acadQueueCollection = collection(db, "acadSummaryreport");
     let q = query(acadQueueCollection, where(document, "==", filter));
     let unsub = onSnapshot(q, (snapshot) =>
@@ -770,20 +769,12 @@ const Report = () => {
                     <TableBody>
                       {searchData.map((queue, index) => (
                         <TableRow key={index}>
-                          <TableCell
-                            sx={{
-                              position: "sticky",
-                              left: 0,
-                              zIndex: "1",
-                              backgroundColor: "#ffffff",
-                            }}
-                          >
+                          <TableCell>
                             <IconButton>
                               <Delete
                                 onClick={() => {
                                   deleteSingleData(queue.id);
                                 }}
-                                color="red"
                               />
                             </IconButton>
                           </TableCell>
