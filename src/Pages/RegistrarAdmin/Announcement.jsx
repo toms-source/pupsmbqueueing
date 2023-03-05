@@ -87,13 +87,20 @@ const Announcement = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (
-      localStorage.getItem("Password1") !== "admin" &&
-      localStorage.getItem("Username1") !== "adminreg"
-    ) {
-      navigate("/admin");
-    }
-  });
+    const checkTime = async () => {
+      if (
+        localStorage.getItem("Password1") !== "admin" &&
+        localStorage.getItem("Username1") !== "adminreg"
+      ) {
+        navigate("/admin");
+      }
+    };
+
+    const intervalId = setInterval(checkTime, 3000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   const insert = async () => {
     if (announce.length > 0) {
       if (window.confirm("Are you sure you wish to add this announcement ?")) {

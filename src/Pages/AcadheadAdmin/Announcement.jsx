@@ -92,13 +92,21 @@ const Announcement = () => {
     admin = "Ms. Khaye Castro";
   }
   useEffect(() => {
-    if (
-      localStorage.getItem("Password") !== "admin" &&
-      localStorage.getItem("Username") !== "adminacad"
-    ) {
-      navigate("/admin");
-    }
-  });
+    const checkTime = async () => {
+      if (
+        (localStorage.getItem("Password") !== "admin" &&
+          localStorage.getItem("Username") !== "adminacad1") ||
+        (localStorage.getItem("Password") !== "admin" &&
+          localStorage.getItem("Username") !== "adminacad2")
+      ) {
+        navigate("/admin");
+      }
+    };
+
+    const intervalId = setInterval(checkTime, 3000);
+
+    return () => clearInterval(intervalId);
+  }, []);
   const insert = async () => {
     if (announce.length > 0) {
       if (window.confirm("Are you sure you wish to add this announcement ?")) {
