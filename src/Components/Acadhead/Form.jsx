@@ -98,7 +98,7 @@ const Form = () => {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "dark",
+          theme: "light",
         });
         navigate("/");
       }
@@ -198,7 +198,7 @@ const Form = () => {
               pauseOnHover: true,
               draggable: true,
               progress: undefined,
-              theme: "dark",
+              theme: "light",
             });
           }
 
@@ -217,7 +217,7 @@ const Form = () => {
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
-            theme: "dark",
+            theme: "light",
           });
         }
       } else if (selectedUser === "Guest/Parent/Alumni") {
@@ -235,7 +235,7 @@ const Form = () => {
               pauseOnHover: true,
               draggable: true,
               progress: undefined,
-              theme: "dark",
+              theme: "light",
             });
           } else if (contact.length < 11) {
             toast.error("Please check your contact number", {
@@ -246,7 +246,7 @@ const Form = () => {
               pauseOnHover: true,
               draggable: true,
               progress: undefined,
-              theme: "dark",
+              theme: "light",
             });
           }
         }
@@ -260,7 +260,7 @@ const Form = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "dark",
+        theme: "light",
       });
       setError(true);
     }
@@ -428,7 +428,7 @@ const Form = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "dark",
+        theme: "light",
       });
     } else if (x === 0 && y > 0) {
       toast.warn("Contact is existing on QueLine", {
@@ -439,7 +439,7 @@ const Form = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "dark",
+        theme: "light",
       });
     } else if (x > 0 && y > 0) {
       toast.warn("Contact and Stundent Number is existing on Que Line", {
@@ -450,7 +450,7 @@ const Form = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "dark",
+        theme: "light",
       });
     } else {
       insert();
@@ -1031,7 +1031,7 @@ const Form = () => {
                         pauseOnFocusLoss
                         draggable
                         pauseOnHover
-                        theme="dark"
+                        theme="light"
                       />
                       <Button
                         type="button"

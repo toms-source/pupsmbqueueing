@@ -27,6 +27,7 @@ const TransactionAcad = () => {
   let [name, setName] = useState("");
   let [transactions, setTransactions] = useState("");
   let [ticket, setTicket] = useState("");
+  const [result, setResult] = useState(false);
   let filters = "";
   let [aheadTicket, setAheadTicket] = useState(0);
   //let [fetchCount, setFetchcount] = useState(0);
@@ -97,9 +98,10 @@ const TransactionAcad = () => {
       filters = (doc.id, " => ", doc.data());
       j++;
     });
-
+    setResult(true);
     if (search.length === 0) {
       alert("Please fill the required input!");
+      setResult(false);
     } else {
       if (j === 0) {
         alert("Contact Number or Student Number not found");
@@ -108,6 +110,7 @@ const TransactionAcad = () => {
         setName(filters.name);
         setTransactions(filters.transaction);
         setTicket(filters.ticket);
+        setResult(false);
       }
     }
   };
@@ -173,103 +176,105 @@ const TransactionAcad = () => {
             />
           </Box>
 
-          <Box
-            sx={{
-              px: { lg: 50, md: 20, xs: 0 },
-              pt: { lg: 5, md: 20, xs: 5 },
-              mb: "10px",
-            }}
-          >
+          {result ? (
             <Box
-              component={Paper}
-              mx={2}
-              p={5}
               sx={{
-                maxWidth: "1000px",
-                backgroundImage: `url(${waves})`,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "contain",
+                px: { lg: 50, md: 20, xs: 0 },
+                pt: { lg: 5, md: 20, xs: 5 },
+                mb: "10px",
               }}
             >
-              <Typography
+              <Box
+                component={Paper}
+                mx={2}
+                p={5}
                 sx={{
-                  width: "100%",
-                  textAlign: "center",
-                  fontSize: {
-                    lg: "2rem",
-                    md: "1.5rem",
-                    sm: "1.5rem",
-                    xs: "1.1rem",
-                  },
-                  fontWeight: "bold",
-                  marginTop: {
-                    lg: "100px",
-                    md: "80px",
-                    sm: "60px",
-                    xs: "40px",
-                  },
+                  maxWidth: "1000px",
+                  backgroundImage: `url(${waves})`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "contain",
                 }}
               >
-                Ticket Entry
-              </Typography>
-              <Typography
-                onChange={(e) => {
-                  setTicket(e.target.value);
-                }}
-                value={ticket}
-                sx={{
-                  width: "100%",
-                  textAlign: "center",
-                  fontSize: {
-                    lg: "2rem",
-                    md: "1.5rem",
-                    sm: "1.5rem",
-                    xs: "1rem",
-                  },
-                  textDecoration: "underline",
-                }}
-              >
-                {ticket}
-              </Typography>
-              <Typography
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-                value={name}
-                sx={{
-                  width: "100%",
-                  textAlign: "center",
-                  fontSize: {
-                    lg: "2rem",
-                    md: "1.5rem",
-                    sm: "1.5rem",
-                    xs: "1rem",
-                  },
-                  fontWeight: "bold",
-                }}
-              >
-                {name}
-              </Typography>
-              <Typography
-                onChange={(e) => {
-                  setTransactions(e.target.value);
-                }}
-                value={transactions}
-                sx={{
-                  width: "100%",
-                  textAlign: "center",
-                  fontSize: {
-                    lg: "2rem",
-                    md: "1.5rem",
-                    sm: "1.5rem",
-                    xs: "1rem",
-                  },
-                }}
-              >
-                {transactions}
-              </Typography>
+                <Typography
+                  sx={{
+                    width: "100%",
+                    textAlign: "center",
+                    fontSize: {
+                      lg: "2rem",
+                      md: "1.5rem",
+                      sm: "1.5rem",
+                      xs: "1.1rem",
+                    },
+                    fontWeight: "bold",
+                    marginTop: {
+                      lg: "100px",
+                      md: "80px",
+                      sm: "60px",
+                      xs: "40px",
+                    },
+                  }}
+                >
+                  Ticket Entry
+                </Typography>
+                <Typography
+                  onChange={(e) => {
+                    setTicket(e.target.value);
+                  }}
+                  value={ticket}
+                  sx={{
+                    width: "100%",
+                    textAlign: "center",
+                    fontSize: {
+                      lg: "2rem",
+                      md: "1.5rem",
+                      sm: "1.5rem",
+                      xs: "1rem",
+                    },
+                    textDecoration: "underline",
+                  }}
+                >
+                  {ticket}
+                </Typography>
+                <Typography
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                  value={name}
+                  sx={{
+                    width: "100%",
+                    textAlign: "center",
+                    fontSize: {
+                      lg: "2rem",
+                      md: "1.5rem",
+                      sm: "1.5rem",
+                      xs: "1rem",
+                    },
+                    fontWeight: "bold",
+                  }}
+                >
+                  {name}
+                </Typography>
+                <Typography
+                  onChange={(e) => {
+                    setTransactions(e.target.value);
+                  }}
+                  value={transactions}
+                  sx={{
+                    width: "100%",
+                    textAlign: "center",
+                    fontSize: {
+                      lg: "2rem",
+                      md: "1.5rem",
+                      sm: "1.5rem",
+                      xs: "1rem",
+                    },
+                  }}
+                >
+                  {transactions}
+                </Typography>
+              </Box>
             </Box>
-          </Box>
+          ) : null}
         </ThemeProvider>
         <Divider>
           <Typography color="#939393" textAlign="center">
@@ -279,7 +284,7 @@ const TransactionAcad = () => {
         <Usertable />
         <Divider>
           <Typography color="#939393" textAlign="center">
-            © Group-7
+            © PUPSMB E-WAIT
           </Typography>
         </Divider>
         <Footer />

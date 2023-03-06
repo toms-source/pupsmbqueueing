@@ -15,7 +15,7 @@ const GenerateFormReg = () => {
 
           <Divider>
             <Typography color="#939393" textAlign="center">
-              © Group-7
+              © PUPSMB E-WAIT
             </Typography>
           </Divider>
           <Footer />

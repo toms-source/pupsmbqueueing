@@ -88,7 +88,6 @@ const styleTableBody = createTheme({
     MuiTableCell: {
       styleOverrides: {
         root: {
-          whiteSpace: "nowrap",
           textAlign: "center",
         },
       },
@@ -695,18 +694,19 @@ const Report = () => {
                             </IconButton>
                           </TableCell>
                           <TableCell>{queue.status}</TableCell>
-                          <TableCell>{queue.name}</TableCell>
-                          <TableCell>{queue.date}</TableCell>
+                          <TableCell sx={{ minWidth: "150px" }}>
+                            {queue.name}
+                          </TableCell>
+                          <TableCell sx={{ minWidth: "150px" }}>
+                            {queue.date}
+                          </TableCell>
                           <TableCell align="right" sx={{ fontWeight: "bold" }}>
                             {queue.ticket}
                           </TableCell>
                           <Tooltip title={queue.transaction} arrow>
                             <TableCell
                               sx={{
-                                maxWidth: "200px",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap",
+                                textAlign: "left",
                               }}
                             >
                               {queue.transaction}

@@ -25,6 +25,7 @@ import { motion } from "framer-motion";
 import Theme from "../CustomTheme";
 import { auth } from "../firebase-config";
 import { useEffect } from "react";
+import Photo from "../Img/228054283_354206726111456_7356025125773092805_n.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -84,7 +85,7 @@ const Login = () => {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "dark",
+          theme: "light",
         });
       }
     } else if (username === "" || pass === "") {
@@ -96,7 +97,7 @@ const Login = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "dark",
+        theme: "light",
       });
     }
   };
@@ -112,7 +113,7 @@ const Login = () => {
             sm={4}
             md={7}
             sx={{
-              backgroundImage: "url(https://i.imgur.com/6FSp1eg.jpg)",
+              backgroundImage: `url(${Photo})`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               backgroundPosition: "center",
@@ -223,7 +224,7 @@ const Login = () => {
                   pauseOnFocusLoss
                   draggable
                   pauseOnHover
-                  theme="dark"
+                  theme="light"
                 />
                 <Button
                   type="button"
