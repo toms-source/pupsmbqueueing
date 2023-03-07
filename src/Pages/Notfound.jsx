@@ -18,7 +18,9 @@ const Notfound = () => {
           flexDirection: "Column",
         }}
       >
-        <Typography variant="h2">!404 Not found</Typography>
+        <Typography variant="h2" color="#000000">
+          404 Not found!
+        </Typography>
         <Box>
           <Button variant="contained" onClick={landing}>
             Go back

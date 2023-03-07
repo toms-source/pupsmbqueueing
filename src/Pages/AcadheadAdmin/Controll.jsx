@@ -6,11 +6,16 @@ import {
   Toolbar,
   Box,
   Grid,
-  Switch,
-  FormControlLabel,
-  FormGroup,
-  Checkbox,
+  Popover,
+  IconButton,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Sidebar from "../../Components/Acadhead/Sidebar";
 import Theme from "../../CustomTheme";
 import img from "../../Img/seal.png";
@@ -18,19 +23,28 @@ import QueueLine from "../../Components/Acadhead/AdminQueueline";
 import NowServing from "../../Components/Acadhead/AdminNowServing";
 import Skip from "../../Components/Acadhead/AdminSkip";
 import { useNavigate } from "react-router-dom";
-import { db } from "../../firebase-config";
-import { collection, getCountFromServer } from "firebase/firestore";
-import { yellow } from "@mui/material/colors";
 
 const Controll = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [openDialog, setopenDialog] = useState(false);
   const navigate = useNavigate();
   let admin = "";
+
+  const handlePopover = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClosePopover = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+
   if (localStorage.getItem("Username") === "adminacad1") {
     admin = "Ms. Ambeth Casimiro";
   } else {
     admin = "Ms. Khaye Castro";
   }
-  let [transaction, setTransaction] = useState(0);
 
   useEffect(() => {
     const checkTime = async () => {
@@ -48,6 +62,13 @@ const Controll = () => {
 
     return () => clearInterval(intervalId);
   }, []);
+
+  const acadHeadSignOut = () => {
+    localStorage.removeItem("Username");
+    localStorage.removeItem("Password");
+    setopenDialog(false);
+    navigate("/admin");
+  };
 
   return (
     <>
@@ -67,8 +88,65 @@ const Controll = () => {
               >
                 Dashboard
               </Typography>
+              <IconButton aria-describedby={id} onClick={handlePopover}>
+                <AccountCircleIcon fontSize="large" sx={{ color: "#fff" }} />
+              </IconButton>
 
-              <Typography>{admin}</Typography>
+              <Popover
+                id={id}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClosePopover}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+              >
+                <Typography sx={{ p: 2 }}>
+                  <Typography textAlign="center"> Logged in as: </Typography>
+                  <Typography
+                    sx={{ textDecoration: "underline", fontWeight: "bold" }}
+                  >
+                    {admin}
+                  </Typography>
+                </Typography>
+                <Button
+                  color="pupMaroon"
+                  sx={{ marginLeft: "5px" }}
+                  onClick={() => setopenDialog(true)}
+                >
+                  Sign out
+                </Button>
+              </Popover>
+
+              <Dialog open={openDialog} aria-labelledby="dialog-title">
+                <DialogTitle id="dialog-title" color="black">
+                  Logout
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="dialog-description">
+                    Are you sure you want to Logout?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <ThemeProvider theme={Theme}>
+                    <Button
+                      onClick={() => setopenDialog(false)}
+                      variant="outlined"
+                      color="pupMaroon"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={acadHeadSignOut}
+                      variant="contained"
+                      color="pupMaroon"
+                    >
+                      Confirm
+                    </Button>
+                  </ThemeProvider>
+                </DialogActions>
+              </Dialog>
             </Toolbar>
           </AppBar>
         </Box>

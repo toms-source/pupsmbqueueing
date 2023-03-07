@@ -77,8 +77,8 @@ const Form = () => {
   useEffect(() => {
     const checkTime = async () => {
       let currentTime = moment();
-      let startTime = moment("00:00", "HH:mm");
-      let endTime = moment("24:00", "HH:mm");
+      let startTime = moment("05:57", "HH:mm");
+      let endTime = moment("16:00", "HH:mm");
       if (currentTime.isBetween(startTime, endTime)) {
         setFormDisable(false);
         setOfficeHours(true);

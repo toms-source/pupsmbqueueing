@@ -26,7 +26,7 @@ import {
 } from "@mui/material";
 import { SearchOutlined, Delete } from "@mui/icons-material";
 import img from "../../Img/seal.png";
-import Sidebar from "../../Components/Acadhead/Sidebar";
+import Sidebar from "../../Components/Registrar/Sidebar";
 import Theme from "../../CustomTheme";
 import { db } from "../../firebase-config";
 import {
@@ -661,7 +661,7 @@ const Report = () => {
                     <TableCell>Transaction</TableCell>
                     <TableCell>Student Number</TableCell>
                     <TableCell>Email</TableCell>
-                    <TableCell>Counter</TableCell>
+
                     <TableCell>Type of User</TableCell>
                     <TableCell>Year&Section</TableCell>
                     <TableCell>Contact Number</TableCell>
@@ -731,12 +731,20 @@ const Report = () => {
                     <TableBody>
                       {searchData.map((queue, index) => (
                         <TableRow key={index}>
-                          <TableCell>
+                          <TableCell
+                            sx={{
+                              position: "sticky",
+                              left: 0,
+                              zIndex: "1",
+                              backgroundColor: "#ffffff",
+                            }}
+                          >
                             <IconButton>
                               <Delete
                                 onClick={() => {
                                   deleteSingleData(queue.id);
                                 }}
+                                color="red"
                               />
                             </IconButton>
                           </TableCell>

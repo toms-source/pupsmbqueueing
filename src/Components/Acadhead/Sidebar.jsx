@@ -13,19 +13,12 @@ import {
   Link,
   Paper,
   createTheme,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Button,
 } from "@mui/material";
 import {
   Dashboard,
   Campaign,
   ScreenShareOutlined,
   InsertChartOutlinedOutlined,
-  Logout,
   Menu,
   Archive,
 } from "@mui/icons-material";
@@ -58,7 +51,6 @@ const sidelogo = createTheme({
 
 const Sidebar = () => {
   const [show, setShow] = useState(false);
-  const [openDialog, setopenDialog] = useState(false);
   const navigate = useNavigate();
 
   const acadHeadcontroll = () => {
@@ -75,12 +67,7 @@ const Sidebar = () => {
   const acadHeadarchive = () => {
     navigate("/acad-head-archive");
   };
-  const acadHeadSignOut = () => {
-    localStorage.removeItem("Username");
-    localStorage.removeItem("Password");
-    setopenDialog(false);
-    navigate("/admin");
-  };
+
   return (
     <>
       <IconButton
@@ -202,51 +189,8 @@ const Sidebar = () => {
                   ></ListItemText>
                 </ListItemButton>
               </ListItem>
-              <ListItem disablePadding>
-                <ListItemButton onClick={() => setopenDialog(true)}>
-                  <ListItemIcon>
-                    <Logout />
-                  </ListItemIcon>
-                  <ListItemText
-                    disableTypography
-                    primary={
-                      <Typography style={{ fontSize: "1.5rem" }}>
-                        Sign Out
-                      </Typography>
-                    }
-                  ></ListItemText>
-                </ListItemButton>
-              </ListItem>
             </List>
           </Box>
-          <Dialog open={openDialog} aria-labelledby="dialog-title">
-            <DialogTitle id="dialog-title" color="black">
-              Logout
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="dialog-description">
-                Are you sure you want to Logout?
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <ThemeProvider theme={Theme}>
-                <Button
-                  onClick={() => setopenDialog(false)}
-                  variant="outlined"
-                  color="pupMaroon"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={acadHeadSignOut}
-                  variant="contained"
-                  color="pupMaroon"
-                >
-                  Confirm
-                </Button>
-              </ThemeProvider>
-            </DialogActions>
-          </Dialog>
         </Drawer>
       </ThemeProvider>
     </>
