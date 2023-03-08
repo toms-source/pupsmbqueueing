@@ -15,7 +15,7 @@ import {
   DialogContentText,
   DialogActions,
 } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { AccountCircle, ExpandMoreRounded } from "@mui/icons-material";
 import Sidebar from "../../Components/Acadhead/Sidebar";
 import Theme from "../../CustomTheme";
 import img from "../../Img/seal.png";
@@ -89,7 +89,8 @@ const Controll = () => {
                 Dashboard
               </Typography>
               <IconButton aria-describedby={id} onClick={handlePopover}>
-                <AccountCircleIcon fontSize="large" sx={{ color: "#fff" }} />
+                <AccountCircle fontSize="large" sx={{ color: "#fff" }} />
+                <ExpandMoreRounded fontSize="medium" sx={{ color: "#fff" }} />
               </IconButton>
 
               <Popover

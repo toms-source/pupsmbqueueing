@@ -1,0 +1,26 @@
+.container {
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #e9e9e9;
+  cursor: pointer;
+  transition: 1s;
+}
+
+img {
+  box-shadow: 5px 5px 20px rgb(177, 177, 177);
+  border-radius: 10px;
+}
+.role {
+  font-weight: bold;
+}
+/* .container:hover {
+  height: 300px;
+} */
+/* .container:focus {
+  height: 300px;
+} */
+
+/* 
+.role:hover {
+  display: block;
+} */
