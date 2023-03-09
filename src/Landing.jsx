@@ -17,7 +17,7 @@ const Landing = () => {
     setLoad(true);
     setTimeout(() => {
       setLoad(false);
-    }, 4100);
+    }, 1500);
   }, []);
   return (
     <>
@@ -26,9 +26,11 @@ const Landing = () => {
           color={"#880000"}
           loading={load}
           size={80}
-          // aria-label="Loading Spinner"
-          // data-testid="loader"
-          style={{ display: "grid", placeItems: "center" }}
+          style={{
+            display: "grid",
+            placeItems: "center",
+            backgroundColor: "transparent",
+          }}
         />
       ) : (
         <>

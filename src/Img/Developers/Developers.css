@@ -6,7 +6,7 @@
   transition: 1s;
 }
 
-img {
+img .img {
   box-shadow: 5px 5px 20px rgb(177, 177, 177);
   border-radius: 10px;
 }

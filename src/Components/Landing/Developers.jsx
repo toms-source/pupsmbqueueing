@@ -34,6 +34,7 @@ const Developers = () => {
                   height="250px"
                   width="280px"
                   alt="Mar jhun Dev"
+                  className="img"
                 />
               </Box>
               <Typography
@@ -96,6 +97,7 @@ const Developers = () => {
                   height="250px"
                   width="280px"
                   alt="Gerwin Dev"
+                  className="img"
                 />
               </Box>
               <Typography
@@ -158,6 +160,7 @@ const Developers = () => {
                   height="250px"
                   width="280px"
                   alt="Vincent Dev"
+                  className="img"
                 />
               </Box>
               <Typography
@@ -220,6 +223,7 @@ const Developers = () => {
                   height="250px"
                   width="280px"
                   alt="Hannah Dev"
+                  className="img"
                 />
               </Box>
               <Typography
@@ -282,6 +286,8 @@ const Developers = () => {
                   height="250px"
                   width="280px"
                   alt="Kristal Dev"
+                  className="img"
+                  style={{ borderRadius: "10px" }}
                 />
               </Box>
               <Typography
