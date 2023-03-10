@@ -34,6 +34,8 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // table header syle
 const styleTableHead = createTheme({
@@ -111,7 +113,16 @@ const Announcement = () => {
         setAnnounce("");
       }
     } else {
-      alert("Please fill all the reqiured fields!");
+      toast.error("Please fill required field", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -187,6 +198,18 @@ const Announcement = () => {
             }}
           />
         </Box>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
 
         {/* Announcement table */}
         <Box px={5}>

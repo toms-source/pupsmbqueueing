@@ -46,6 +46,8 @@ import { useNavigate } from "react-router-dom";
 import { async } from "@firebase/util";
 import { useReactToPrint } from "react-to-print";
 import { transactionsAcad } from "../../Components/Selectfunctions";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // table header syle
 const styleTableHead = createTheme({
@@ -178,11 +180,30 @@ const Report = () => {
       j++;
     });
     if (search.length === 0) {
-      alert("Please input data");
+      toast.error("Please input data", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       setTableMap(true);
     } else {
       if (j === 0) {
-        alert(sort + " not found");
+        toast.error(sort + "not found", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
         setTableMap(true);
       } else {
         setTableMap(false);
@@ -232,7 +253,16 @@ const Report = () => {
         moveAllData();
       }
     } else {
-      alert("Delete failed: No data filtered");
+      toast.error("Delete failed: No data filtered", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -627,6 +657,19 @@ const Report = () => {
             </>
           )}
         </Box>
+
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         <Box mx={5} sx={{ display: "flex", justifyContent: "end" }}>
           <Stack spacing={1.5} direction="row">
             <Box sx={{ minWidth: 180, bgcolor: "white" }}>

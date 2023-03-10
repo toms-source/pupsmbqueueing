@@ -18,6 +18,7 @@ import {
   IconButton,
   InputAdornment,
   TextField,
+  Stack,
 } from "@mui/material";
 import { Delete, Restore, Sync, SearchOutlined } from "@mui/icons-material";
 import img from "../../Img/seal.png";
@@ -38,7 +39,8 @@ import {
   addDoc,
   serverTimestamp,
 } from "firebase/firestore";
-import { Stack } from "@mui/system";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // table header syle
 const styleTableHead = createTheme({
@@ -117,11 +119,29 @@ const Archive = () => {
       j++;
     });
     if (search.length === 0) {
-      alert("Please fill required field");
+      toast.error("Please fill required field", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     } else {
       if (j === 0) {
         setTableMap(true);
-        alert("No data found");
+        toast.error("No data found", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       } else {
         setTableMap(false);
       }

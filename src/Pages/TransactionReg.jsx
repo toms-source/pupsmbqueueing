@@ -18,6 +18,8 @@ import Appbar from "../Components/Landing/Appbar";
 import Footer from "../Components/Landing/Footer";
 import { db } from "../firebase-config";
 import { collection, query, getDocs, where } from "firebase/firestore";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Usertable from "../Components/Registrar/Usertable";
 import waves from "../Img/wave.svg";
@@ -100,11 +102,29 @@ const TransactionAcad = () => {
     });
     setResult(true);
     if (search.length === 0) {
-      alert("Please fill the required input!");
+      toast.error("Please fill the required input!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       setResult(false);
     } else {
       if (j === 0) {
-        alert("Contact Number or Student Number not found");
+        toast.warn("Contact Number or Student Number not found", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         clearForm();
       } else {
         setName(filters.name);
@@ -175,6 +195,19 @@ const TransactionAcad = () => {
               }}
             />
           </Box>
+
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
 
           {result ? (
             <Box

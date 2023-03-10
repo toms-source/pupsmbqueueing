@@ -57,7 +57,7 @@ const Developers = () => {
               >
                 <Stack spacing={1} direction="row">
                   <Link
-                    href=""
+                    href="mailto: marjhunjoseaquino@outlook.com"
                     target="_blank"
                     rel="noreferrer"
                     variant="body2"
@@ -75,7 +75,7 @@ const Developers = () => {
                     <FontAwesomeIcon icon={faFacebook} fontSize="25px" />
                   </Link>
                   <Link
-                    href="https://www.linkedin.com/in/gerwincristobal/"
+                    href="https://www.linkedin.com/in/mar-jhun-aquino-722957258/"
                     target="_blank"
                     rel="noreferrer"
                     variant="body2"
@@ -173,7 +173,7 @@ const Developers = () => {
               </Typography>
               <Typography textAlign="center" fontWeight="bold">
                 Vincent M. Dela Cruz
-              </Typography>{" "}
+              </Typography>
               <Box
                 sx={{
                   display: "flex",
@@ -183,7 +183,7 @@ const Developers = () => {
               >
                 <Stack spacing={1} direction="row">
                   <Link
-                    href="https://www.facebook.com/mrjhnqn"
+                    href="mailto: centzkie14@gmail.com"
                     target="_blank"
                     rel="noreferrer"
                     variant="body2"
@@ -201,7 +201,7 @@ const Developers = () => {
                     <FontAwesomeIcon icon={faFacebook} fontSize="25px" />
                   </Link>
                   <Link
-                    href="https://www.linkedin.com/in/gerwincristobal/"
+                    href="https://www.linkedin.com/in/dela-cruz-vincent-59086b258/"
                     target="_blank"
                     rel="noreferrer"
                     variant="body2"
@@ -246,7 +246,7 @@ const Developers = () => {
               >
                 <Stack spacing={1} direction="row">
                   <Link
-                    href="https://www.facebook.com/mrjhnqn"
+                    href="mailto: mahannahmeriellecarozrafael@outlook.com"
                     target="_blank"
                     rel="noreferrer"
                     variant="body2"
@@ -264,7 +264,7 @@ const Developers = () => {
                     <FontAwesomeIcon icon={faFacebook} fontSize="25px" />
                   </Link>
                   <Link
-                    href="https://www.linkedin.com/in/gerwincristobal/"
+                    href="https://www.linkedin.com/in/ma-hannah-meriel-rafael-713b5b258/"
                     target="_blank"
                     rel="noreferrer"
                     variant="body2"
@@ -310,7 +310,7 @@ const Developers = () => {
               >
                 <Stack spacing={1} direction="row">
                   <Link
-                    href="https://www.facebook.com/mrjhnqn"
+                    href="mailto: tabareskristal8gmail.com"
                     target="_blank"
                     rel="noreferrer"
                     variant="body2"
@@ -328,7 +328,7 @@ const Developers = () => {
                     <FontAwesomeIcon icon={faFacebook} fontSize="25px" />
                   </Link>
                   <Link
-                    href="https://www.linkedin.com/in/gerwincristobal/"
+                    href="https://www.linkedin.com/in/kristal-kate-tabares-652b44258/"
                     target="_blank"
                     rel="noreferrer"
                     variant="body2"
